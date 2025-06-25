@@ -9,16 +9,16 @@ def get_headers(header_line:List[str])->Dict[str,int]:
     return headers
 
 
-def make_movies(movie_list:List[str],credits_list:List[str])->List[Movie]:
+def make_movies(movie_list:List[str],credits_list:List[str])->Dict[int, Movie]:
     movie_dict = {}
-    headers = None
+    h = None
     for i,mline in enumerate(movie_list):
         if i == 0:
             h = get_headers(mline)
         elif len(mline) < len(h):
             continue
         else:
-            id = mline[h["id"]]
+            id = int(mline[h["id"]])
             title = mline[h["title"]]
             genres = getvalsfromjsn(mline[h["genres"]], "name")
             keywords = getvalsfromjsn(mline[h["keywords"]],"name")
@@ -32,7 +32,7 @@ def make_movies(movie_list:List[str],credits_list:List[str])->List[Movie]:
         elif len(mline) < len(h):
             continue
         else:
-            id = cline[h["movie_id"]]
+            id = int(cline[h["movie_id"]])
             if id in movie_dict:
                 movie = movie_dict[id]
             else:
@@ -44,4 +44,4 @@ def make_movies(movie_list:List[str],credits_list:List[str])->List[Movie]:
             #     if(crewmember["job"]=="director"):
             #         movie.director = crewmember["name"]
             movie_dict.update({id:movie})
-    return list(movie_dict.values())
+    return movie_dict
