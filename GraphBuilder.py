@@ -7,8 +7,8 @@ def make_key(id1:int,id2:int)->str:
     second:str = str(max(id1,id2))
     return first + "x" + second
 
-def update_probability(prior: float,new:float)->float:
-    return 1.0 - (1.0-prior)*(1.0-new)
+def update_probability(prior: int,new:int)->int:
+    return prior + new
 
 def update_edges_by_property(edges_dict:Dict[str,Edge], prop_name: str, movies:Dict[int,Movie],p:float)->Dict[str,Edge]:
     prop_dict: Dict[str, List[int]] = {}
@@ -34,9 +34,9 @@ def update_edges_by_property(edges_dict:Dict[str,Edge], prop_name: str, movies:D
     return edges_dict
 
 def make_graph(movies:Dict[id,Movie])-> Dict[str,Edge]:
-    common_actor:float = 0.1
-    common_genre:float = 0.1
-    common_keyword:float = 0.2
+    common_actor:float = 1
+    common_genre:float = 1
+    common_keyword:float = 2
     edges_dict:Dict[str,Edge] = {}
     genre_dict:Dict[str,List[int]] = {}
     keyword_dict:Dict[str,List[int]] = {}
@@ -45,7 +45,7 @@ def make_graph(movies:Dict[id,Movie])-> Dict[str,Edge]:
         for id2 in movies.keys():
             key = make_key(id1,id2)
             if key not in edges_dict:
-                edges_dict[key]=Edge(movies[id1],movies[id2],0.05)
+                edges_dict[key]=Edge(movies[id1],movies[id2],0)
     edges_dict = update_edges_by_property(edges_dict,"genre",movies,common_genre)
     edges_dict = update_edges_by_property(edges_dict,"keyword",movies,common_keyword)
     edges_dict = update_edges_by_property(edges_dict,"actor",movies,common_actor)

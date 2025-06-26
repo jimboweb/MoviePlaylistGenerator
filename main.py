@@ -8,10 +8,10 @@ def main():
     movies = make_movies(movie_list,credit_list)
     # write_movies(movies)
     edges_dict = make_graph(movies)
-    print("")
+    # print("")
 
-    # TODO: make probabilistic graph object for movies
-    # TODO: use graph object to make watch list
+    # FIXME: graph weight should be ints rather than floats
+    # TODO: choose 3-4 random starting movies. sum weights to all other movies and choose randomly from sum to find next movie.
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
